@@ -9,8 +9,11 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 ## Autores
 
 [Pedro Militão Mello Reis](https://github.com/MilitaoPedro)
-[Henrique César Silva Soares]((https://github.com/henriqueecss))
+
+[Henrique César Silva Soares](https://github.com/henriqueecss)
+
 [Clarisse Lacerda Pimentel](https://github.com/Clarisse-Pimentel)
+
 ## Ferramentas
 
  - Node.js (v22.12.0)
