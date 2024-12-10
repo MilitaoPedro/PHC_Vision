@@ -6,21 +6,6 @@ Será desenvolvido um software capaz de prover CRUDs para projetos, tarefas, usu
 
 Em diversas empresas, as funções são divididas entre os funcionários a partir de planilhas passadas semanalmente. Tal modus operandi, é um tanto quanto desorganizado e torna necessário a alocação de um funcionário para a criação e gerenciamento das planilhas. Além disso, muitos negócios utilizam softwares de gestão de tempo/pessoas. Porém, essas soluções geralmente não estão adaptadas às necessidades reais da empresa, sendo muito generalistas. Ademais, a partir de uma pesquisa de mercado, descobrimos que, por diversas vezes, esses softwares foram rotulados como não intuitivos para novos funcionários, fazendo com que, a cada nova contratação, seja necessário um longo tempo de adaptação ao nosso sistema de gestão. 
 
-## Índice
-
-<details>
-   <summary>Índice</summary>
-   <ol>
-   <li><a href="#modelagem-de-dados">Modelagem de Dados</a>
-      <ul>
-         <li><a href="#diagrama-de-entidade">Diagrama de Entidade</a></li>
-         <li><a href="#entidades">Entidades</a></li>
-         <li><a href="#relacionamentos">Relacionamentos</a></li>
-      </ul>
-   </li>
-   </ol>
-</details>
-
 ## Iniciando o desenvolvimento
 
 Para conseguir rodar na sua máquina, siga o passo a passo a seguir.
