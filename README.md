@@ -89,18 +89,4 @@ git clone https://github.com/MilitaoPedro/PHC_Vision
    ```sh
    pnpm start:dev
    ```
-
-
-## Design PHC Vision
-
-Este documento descreverá o design técnico do projeto PHC Vision, incluindo a arquitetura geral, organização de código e diagrama de entidade. O objetivo é fornecer uma visão geral do projeto.
-
-## Modelagem de Dados
-
-O projeto PHC Vision é uma plataforma de gestão de tarefas/projetos pessoais e/ou em grupo. A modelagem de dados é essencial para garantir a integridade e consistência dos dados da aplicação, bem como para facilitar a interação entre os diferentes componentes do sistema.
-
-### Diagrama de Caso de Uso
-
-
-
 ---
