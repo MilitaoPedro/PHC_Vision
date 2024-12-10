@@ -17,9 +17,9 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 ## Ferramentas
 
  - Node.js (v22.12.0)
- - React Framework
- - Express
- - Docker
+ - React Framework (v19.0)
+ - Express (v4.21.2)
+ - Docker (v27.0)
  - FireBase (NoSQL Database)
 
 ## Iniciando o desenvolvimento
