@@ -10,6 +10,8 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 
  - Node.js (v22.12.0)
  - React Framework
+ - Express
+ - Docker
  - FireBase (NoSQL Database)
 
 ## Iniciando o desenvolvimento
