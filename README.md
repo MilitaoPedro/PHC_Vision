@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PHC Vision
 
-## Getting Started
+Será desenvolvido um software capaz de prover CRUDs para projetos, tarefas, usuário, gerente e possíveis outras demandas da empresa. Esse sistema  possuirá um interface simples e intuitiva que prioriza a experiência do usuário e o torna capaz de gerir um projeto e alocar outras pessoas para determinadas tarefas. Além disso, será possível criar uma lista de tarefas pessoal, sem a necessidade da criação de um projeto e/ou envolvimento de outros usuários. O sistema possuirá autorização e autenticação para permitir que apenas pessoas autorizadas consigam realizar o acesso e alteração dos dados. Já os dados referente ao login e senha estarão criptografados no banco de dados. Toda comunicação entre o frontend e backend deverá ser criptografada, tornando assim a aplicação segura.
 
-First, run the development server:
+## Motivação
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Em diversas empresas, as funções são divididas entre os funcionários a partir de planilhas passadas semanalmente. Tal modus operandi, é um tanto quanto desorganizado e torna necessário a alocação de um funcionário para a criação e gerenciamento das planilhas. Além disso, muitos negócios utilizam softwares de gestão de tempo/pessoas. Porém, essas soluções geralmente não estão adaptadas às necessidades reais da empresa, sendo muito generalistas. Ademais, a partir de uma pesquisa de mercado, descobrimos que, por diversas vezes, esses softwares foram rotulados como não intuitivos para novos funcionários, fazendo com que, a cada nova contratação, seja necessário um longo tempo de adaptação ao nosso sistema de gestão. 
+
+## Autores
+
+[Pedro Militão Mello Reis](https://github.com/MilitaoPedro)
+
+[Henrique César Silva Soares](https://github.com/henriqueecss)
+
+[Clarisse Lacerda Pimentel](https://github.com/Clarisse-Pimentel)
+
+## Ferramentas
+
+ - Node.js (v22.12.0)
+ - React Framework (v19.0)
+ - Express (v4.21.2)
+ - Docker (v27.0)
+ - FireBase (NoSQL Database)
+
+## Iniciando o desenvolvimento
+
+Para conseguir rodar na sua máquina, siga o passo a passo a seguir.
+
+### Pré-requisitos
+
+- Node.js
+
+```sh
+https://nodejs.org/en/download/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> [!TIP]
+> - Recomendamos [nvm](https://github.com/nvm-sh/nvm) para gerenciar as versões do Node (Linux e Mac)
+> - Se está utilizando Windows, existe a opção do [nvm-windows](https://github.com/coreybutler/nvm-windows)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- [PNPM](https://pnpm.io/installation) - se algum dos comandos abaixo não funcionar, consulte a [documentação da ferramenta](https://pnpm.io/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   - Linux/OSX
 
-## Learn More
+      ```sh
+      curl -fsSL https://get.pnpm.io/install.sh | sh -
+      ```
 
-To learn more about Next.js, take a look at the following resources:
+   - Windows
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+      ```sh
+      iwr https://get.pnpm.io/install.ps1 -useb | iex
+      ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Docker (será utilizado principalmente para banco de dados para desenvolvimento)
 
-## Deploy on Vercel
+   ```sh
+   https://www.docker.com/get-started/
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Instalação
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Clone o repositório
+
+```sh
+git clone https://github.com/MilitaoPedro/PHC_Vision
+```
+
+1. Instale as dependências
+
+   ```sh
+   pnpm install
+   ```
+
+2. Rode os containers (ou pare-os, se necessário):
+  
+   ```sh
+   pnpm compose:up
+   ```
+
+3. Rode o script de configuração
+
+   ```sh
+   pnpm config:local
+   ```
+
+4. Rode os projetos
+
+   ```sh
+   pnpm start:dev
+   ```
+---
