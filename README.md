@@ -22,6 +22,28 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
  - Docker (v27.0)
  - FireBase (NoSQL Database)
 
+## Documentação e Requisitos
+
+
+* Padrões Adotados: Diretório contendo regras de verificação e análise de requisitos.
+* Requisitos: Inclui diagramas, documentos de casos de uso, e outros artefatos necessários para o desenvolvimento do projeto.
+* DiagramasDeSequência: Contém diagramas de sequência em formato JPEG.
+* DiagramasDeClasses: Contém diagramas de classes.
+* DiagramasDeImplantação: Contém diagramas de implantação.
+* Documentação de Requisitos: Inclui documentos de requisitos em formato PDF.
+
+
+## Regras de Clean Code
+
+
+* Funções Pequenas e Coesas: Cada função deve realizar apenas uma tarefa específica.
+* Nomes Claros e Descritivos: Utilizar nomes que reflitam claramente o propósito de variáveis, funções e classes.
+* Evitar Comentários Desnecessários: O código deve ser autoexplicativo; comentários devem ser usados apenas quando realmente necessários para clarificação.
+* Retorno Direto de Funções: Evitar o uso de variáveis temporárias desnecessárias ao retornar valores.
+* Uso de Objetos para Agrupar Parâmetros: Facilita a leitura e manutenção de funções com múltiplos parâmetros relacionados.
+* Evitar Código Duplicado: Reutilizar código através de funções e componentes reutilizáveis para manter a consistência e facilitar manutenção.
+
+
 ## Iniciando o desenvolvimento
 
 Para conseguir rodar na sua máquina, siga o passo a passo a seguir.
