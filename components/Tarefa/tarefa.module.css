@@ -1,0 +1,49 @@
+.taskContainer {
+    width: 100%;
+    border-radius: 20;
+    margin: 10px 0px;
+    height: 140px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid black;
+    padding: 0px 20px;
+}
+
+.taskTitleIcon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.taskTitle {
+    width: auto;
+    padding-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.taskDescription{
+    width: auto;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    font-size: smaller;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+            line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.taskPriorityDate {
+    font-size: smaller;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+    padding-bottom: 5px;
+}

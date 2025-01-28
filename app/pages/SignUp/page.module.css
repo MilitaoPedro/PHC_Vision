@@ -1,0 +1,50 @@
+
+.backgroundContainer {
+    background-color: #7385FF;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../assets/images/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .forms {
+    background-color: #FFF;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 850px;
+    height: 72%;
+    border-radius: 10px;
+  }
+  
+  .formsContainer {
+    height: 90%;
+    width: 44%;
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+  }
+  
+  .formsImageContainer {
+    display: flex;
+    height: 80%;
+    width: 450px;
+    background-image: url(../../../assets/images/ImageSignUp.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  .formsLogoContainer {
+    height: 22px;
+    margin-right: 10px;
+    background-image: url(../../../assets/images/logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+  }

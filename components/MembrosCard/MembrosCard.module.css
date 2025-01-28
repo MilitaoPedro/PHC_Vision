@@ -1,0 +1,24 @@
+.memberContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20;
+    border: 1px solid #677BFF;
+    margin: 20px 0px;
+}
+
+.nameEmail {
+    text-align: left;
+}
+
+.actionAndDelete {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 40px;
+}

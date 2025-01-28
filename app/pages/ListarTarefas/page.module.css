@@ -1,0 +1,127 @@
+.backgroundContainer {
+    background-color: #7385FF;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../assets/images/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.tarefasContainer {
+    width: 91%;
+    margin-top: 80px;
+    height: 85%;
+    max-width: 1400px;
+}
+
+.tarefasContainerHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tarefasHeaderItems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 20px;
+}
+
+.hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 4px solid #F8F8F8;
+    margin: 1em 0;
+    padding: 0;
+    width: 40%;
+}
+
+.tarefasBoxContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 85%;
+}
+
+.tarefasBox {
+    width: 30%;
+    border-radius: 40;
+    text-align: center;
+    background-color: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    
+}
+
+.tarefasBoxHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.tarefasItemsContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.modalButton {
+    margin: 20px 0px;
+    font-size: 20px;
+    width: 60%;
+    cursor: pointer;
+    background-color: red;
+    border: none;
+    border-radius: 5;
+}
+
+.ItemtitleModal {
+    color: #677BFF;
+    margin-left: 80px;
+    text-align: left;
+    width: 700px;
+    font-weight: bolder;
+  }
+  
+.modalHr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #677BFF;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.formDiv {
+    padding: 22px 40px;
+    text-align: left;
+}
+
+.formEmailContainer { 
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.formEmail {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.membrosDiv {
+    height: 380px;
+    width: 100%;
+    overflow-y: scroll;
+}
