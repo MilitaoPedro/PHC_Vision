@@ -2,16 +2,47 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useAuth } from "../Auth/auth";
 
 const NormalLoginForm = () => {
   const router = useRouter();
   const [form] = Form.useForm();
+  const { login } = useAuth();  
 
-  const handleSubmit = (values) => {
-    console.log("Received values of form: ", values);
-    router.push("/pages/Dashboard");
+  const handleSubmit = async (values) => {
+    const { email, password } = values;
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          senha: password
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Usuário ou senha inválidos');
+      }
+
+      const data = await response.json();
+      console.log("Login successful: ", data);
+      message.success('Login efetuado com sucesso!');
+
+      router.push("/pages/Dashboard");
+
+      // Use the login function from context to set the user and token
+      login(data.user, data.token);  // Assuming the server response contains user data and token
+
+      
+      
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   return (
@@ -23,12 +54,12 @@ const NormalLoginForm = () => {
     >
       <h1 style={{marginBottom: "20px"}}>Login</h1>
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Por favor, insira um nome de usuário" }]}
+        name="email"
+        rules={[{ required: true, message: "Por favor, insira seu email" }]}
       >
         <Input 
           prefix={<UserOutlined style={{ color: "rgba(0,0,0,.7)", padding: "10px"}} />}
-          placeholder="Nome de usuário"
+          placeholder="Email"
         />
       </Form.Item>
       <Form.Item

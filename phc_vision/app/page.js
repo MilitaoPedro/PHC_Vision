@@ -6,14 +6,14 @@ import WrappedNormalLoginForm  from "../components/Form/form.js"
 
 export default function Home() {
   return (
-    <div className = {styles.backgroundContainer}>
-      <div className = {styles.forms}>
-        <div className = {styles.formsContainer}>
-          <WrappedNormalLoginForm />
-          <div className = {styles.formsLogoContainer} />
+      <div className = {styles.backgroundContainer}>
+        <div className = {styles.forms}>
+          <div className = {styles.formsContainer}>
+            <WrappedNormalLoginForm />
+            <div className = {styles.formsLogoContainer} />
+          </div>
+          <div className = {styles.formsImageContainer} />
         </div>
-        <div className = {styles.formsImageContainer} />
       </div>
-    </div>
   );
 }
