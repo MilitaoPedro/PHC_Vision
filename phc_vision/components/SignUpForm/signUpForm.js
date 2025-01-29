@@ -1,36 +1,47 @@
   "use client";
 
+  import React from "react";
   import { useRouter } from "next/navigation";
-
-  import React, { useState } from "react";
   import {
     Form,
     Input,
     Button
   } from "antd";
-
-  import { UserAddOutlined, LockOutlined, LockFilled, CodeFilled} from "@ant-design/icons";
+  import { 
+    UserAddOutlined, 
+    LockOutlined, 
+    LockFilled, 
+    CodeFilled } from "@ant-design/icons";
 
   export default function RegistrationForm() {
     const router = useRouter();
-    const [confirmDirty, setConfirmDirty] = useState(false);
-    const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-    const handleSubmit = (values) => {
-      console.log("Received values of form: ", values);
-      router.push("/");
+    const handleSubmit = async (values) => {
+      try {
+        const response = await fetch("http://localhost:3001/cadastroUsuario", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: values.nickname,
+            email: values.email,
+            senha: values.password,
+          }),
+        });
+    
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`Server error: ${response.status} - ${errorText}`);
+          throw new Error('Erro ao se comunicar com o servidor.');
+        }
+    
+        const user = await response.json();
+        router.push("/"); // Ajuste conforme a rota real em vigor
+      } catch (error) {
+        console.error("Error:", error);
+      }
     };
-
-    const handleWebsiteChange = (value) => {
-      setAutoCompleteResult(
-        value ? [".com", ".org", ".net"].map((domain) => `${value}${domain}`) : []
-      );
-    };
-
-    const websiteOptions = autoCompleteResult.map((website) => ({
-      label: website,
-      value: website,
-    }));
 
     return (
       <Form onFinish={handleSubmit}>
