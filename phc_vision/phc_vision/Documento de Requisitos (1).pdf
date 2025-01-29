@@ -1,0 +1,1079 @@
+Documento de Requisitos
+
+                         Ficha Técnica
+
+Equipe Responsável pela Elaboração
+        Pedro Militão Mello Reis - Desenvolvimento de Software / Gerência do projeto
+        Henrique César Silva Soares - Desenvolvimento de Software
+        Clarisse Lacerda Pimentel - Desenvolvimento / Controle de qualidade
+
+Público Alvo
+        Este manual destina-se a desenvolvedores, analistas de sistemas, gerentes de projeto e stakeholders
+        envolvidos na criação e manutenção do sistema de gestão de projetos e tarefas
+
+Versão 0.1               dezembro de 2024
+Documento de Requisitos                                Sumário
+
+        Visão geral deste documento​                                   1
+        Glossário, Siglas e Acrogramas​
+        Definições e Atributos de Requisitos​                          1
+
+               ∙​ Identificação dos Requisitos​                        2
+               ∙​ Prioridades dos Requisitos​                          2
+
+        Abrangência e sistemas relacionados​                           2
+        Relação de usuários do sistema​
+        Diagrama de Caso de Uso – Visáo do Usuário​                    1
+
+               ∙​ Visão do Administrador​                              1
+               ∙​ Visão do Usuário​
+                                                                       2
+        Estoque​                                                       2
+                 [RF001] Criar Usuário​
+                 [RF002] Ler Usuário​                                  2
+                 [RF003] Atualizar Usuário​
+                 [RF004] Criar Tarefa​                                 4
+                 [RF005] Ler Tarefa​                                   4
+                 [RF006] Atualizar Tarefa​                             4
+                 [RF007] Deletar Tarefa​                               5
+                 [RF008] Criar Lista de Tarefas​                       6
+                 [RF009] Ler Lista de Tarefas​                         7
+                 [RF010] Atualizar Lista de Tarefas​                   7
+                 [RF011] Deletar Lista de Tarefas​                     8
+                 [RF012] Login​                                        9
+                 [RF013] Logout​                                       9
+                 [RF014] Notificações e Lembretes​                    10
+                                                                      10
+        Usabilidade​                                                  11
+                 [NF001] Interface Intuitiva​                         12
+                  [NF002] Responsividade​                             12
+
+        Confiabilidade​                                               14
+                 [NF003] Disponibilidade do Sistema​                  14
+                 [NF004] Backup de dados​                             14
+
+        Desempenho​                                                   14
+                 [NF005] Tempo de Resposta​                           14
+                 [NF006] Escalabilidade​
+                                                                    14
+        Segurança​
+                                                                      14
+Versão 0.1                                                            15
+                                                                      15
+
+                                                                      16
+
+                                                      dezembro de 2024
+Documento de Requisitos
+
+            [NF007] Criptografia de Dados​           16
+
+            [NF008] Comunicação Segura​              16
+
+            [NF009] Autenticação e Autorização​      16
+
+Distribuição​                                        16
+
+            [NF010] Acesso via web​                  16
+
+Padrões​                                             17
+
+            [NF011] Conformidade com Padrões Web​    17
+
+Hardware e software​                                 17
+
+            [NF012] Requisitos de Servidor​          17
+
+            [NF013] Compatibilidade de Navegadores​  17
+
+Descrição da interface com o usuário​                18
+
+Dicionário de Dados ​                                19
+
+PROTOTIPAÇÃO​                                        23
+
+MAPA DE NAVEGAÇÃO DE INTERFACES​                     23
+
+Versão 0.1                                           dezembro de 2024
+Documento de Requisitos               Introdução – P1 / 1
+
+                         ​Introdução
+
+        Este documento especifica o sistema PHC Vision, fornecendo aos desenvolvedores as
+        informações necessárias para o projeto e implementação, assim como para a realização dos
+        testes e homologação do sistema.
+
+​Visão geral deste documento
+
+        Esta introdução fornece as informações necessárias para fazer um bom uso deste documento,
+        explicitando seus objetivos e as convenções que foram adotadas no texto, além de conter uma
+        lista de referências para outros documentos relacionados. As demais seções apresentam a
+        especificação do sistema PHC Vision e estão organizadas como descrito abaixo.
+●​ Capítulo 2 – Descrição geral do sistema: apresenta uma visão geral do sistema, caracterizando
+    qual é o seu escopo e descrevendo seus usuários.
+●​ Capítulo 3 – Requisitos funcionais (casos de uso): apresenta todos os requisitos funcionais do
+    sistema, descrevendo os fluxos de eventos, prioridades, atores, entradas e saídas de cada caso de
+    uso a ser implementado.
+●​ Capítulo 4 – Requisitos não funcionais: apresenta todos os requisitos não funcionais do sistema,
+    divididos em requisitos de usabilidade, confiabilidade, desempenho, segurança, distribuição,
+    adequação a padrões e requisitos de hardware e software.
+●​ Capítulo 5 – Descrição da interface com o usuário: apresenta desenhos, figuras ou rascunhos de
+    telas do sistema.
+●​ Capítulo 6 – Dicionário de Dados: apresenta a primeira versão do dicionário de dados
+    especificado durante a elicitação de requisitos e prototipação de interface.
+
+​Glossário, Siglas e Acrogramas
+
+CRUD – Create, Read, Update, Delete (Criar, Ler, Atualizar, Deletar)
+
+UI – User Interface (Interface do Usuário)
+
+UX – User Experience (Experiência do Usuário)
+
+SGBD – Sistema de Gerenciamento de Banco de Dados
+
+API – Application Programming Interface (Interface de Programação de Aplicações)
+
+HTTPS – HyperText Transfer Protocol Secure (Protocolo de Transferência de Hipertexto Seguro)
+
+D​ efinições e Atributos de Requisitos
+
+●​ Identificação dos Requisitos
+        RF é utilizado para identificar Requisitos Funcionais e RNF é utilizado para identificar
+        Requisitos Não Funcionais. Ambas siglas vem acompanhada de um número que é o
+        identificador único do requisito. Por exemplo, o requisito [RF001] indica um requisito
+        funcional de número 1.
+
+●​ Prioridades dos Requisitos
+        Para estabelecer a prioridade dos requisitos foram adotadas as denominações “essencial”,
+        “importante” e “desejável”.
+
+●​ Essencial é o requisito sem o qual o sistema não entra em funcionamento. Requisitos essenciais
+    são requisitos imprescindíveis, que têm que ser implementados impreterivelmente.
+
+Versão 0.1               dezembro de 2024
+Documento de Requisitos  Introdução – P2 / 2
+
+●​ Importante é o requisito sem o qual o sistema entra em funcionamento, mas de forma não
+    satisfatória. Requisitos importantes devem ser implementados, mas, se não forem, o sistema
+    poderá ser implantado e usado mesmo assim.
+
+●​ Desejável é o requisito que não compromete as funcionalidades básicas do sistema, isto é, o
+    sistema pode funcionar de forma satisfatória sem ele. Requisitos desejáveis são requisitos que
+    podem ser deixados para versões posteriores do sistema, caso não haja tempo hábil para
+    implementá-los na versão que está sendo especificada.
+
+Versão 0.1               dezembro de 2024
+Documento de Requisitos  Descrição geral do sistema – C1. P1 / 1
+
+                                                                                                     Capítulo
+
+                             ​Descrição geral do sistema
+
+A​ brangência e sistemas relacionados
+
+O PHC Vision será projetado para facilitar o gerenciamento de projetos, tarefas e equipes dentro de
+uma empresa, permitindo aos usuários administrar tanto tarefas individuais quanto colaborativas de
+forma eficiente. Além disso, o sistema oferecerá a criação de listas personalizadas de tarefas e
+organização de projetos, sendo completamente auto-contido e não dependendo de integrações com
+sistemas externos para executar suas funcionalidades principais.
+
+O sistema terá como funcionalidades principais o gerenciamento de usuários, permitindo o cadastro,
+atualização, exclusão e visualização, além de autenticação e autorização para garantir segurança no
+acesso. Também incluirá o gerenciamento de projetos, possibilitando criar, atualizar, excluir e
+visualizar projetos, bem como alocar tarefas a usuários dentro desses projetos. O gerenciamento de
+tarefas será outro ponto central, com suporte para criação, atualização, exclusão e visualização de
+tarefas, além de ferramentas de organização por prioridade, status e prazos. Para listas de tarefas, o
+sistema permitirá a criação de listas personalizadas com foco na organização e visualização
+simplificada. Adicionalmente, notificações e lembretes serão enviados para alertar os usuários sobre
+prazos e alterações em tarefas, enquanto configurações personalizadas oferecerão a possibilidade de
+ajustar preferências, como notificações e aparência do sistema. Todas essas funcionalidades serão
+acompanhadas de medidas de segurança, como criptografia de dados sensíveis e comunicação segura
+entre frontend e backend via HTTPS.
+
+Por outro lado, algumas funcionalidades não estarão contempladas nesta versão do sistema. Ele não
+realizará integrações com ferramentas de comunicação, como Slack ou Microsoft Teams, ou gerará
+relatórios básicos também não serão fornecidos. Além disso, o sistema não incluirá ferramentas de
+chat ou troca de mensagens diretas entre usuários, sendo necessário o uso de outras plataformas para
+colaboração.
+
+O sistema será completamente independente, sem interação com outros sistemas relacionados.
+Entretanto, para possíveis necessidades futuras, como exportação de relatórios ou sincronização com
+calendários externos, esses recursos poderão ser planejados em versões posteriores. O foco do escopo
+atual é o desenvolvimento das funcionalidades essenciais e a entrega de um sistema eficiente e seguro.
+
+​Relação de usuários do sistema
+
+Foram identificados dois usuários do sistema PHC Vision, denominados Usuário e
+Administrador, detalhados a seguir:
+
+●​ Usuário
+
+   Funcionário que utiliza o sistema para gerenciar suas tarefas pessoais, participar de
+   projetos e colaborar com outros membros da equipe. Têm acesso às funcionalidades de
+   CRUD de tarefas e listas de tarefas, organização e categorização das mesmas, criação de
+   listas pessoais, notificações e configurações de usuário.
+
+●​ Administrador
+
+Versão 0.1               dezembro de 2024
+Documento de Requisitos                      Descrição geral do sistema – C1. P2 / 2
+
+Responsável pela administração geral do sistema, incluindo a gestão de usuários, projetos
+e tarefas da empresa. Têm acesso total às funcionalidades de CRUD de usuários, projetos,
+tarefas e listas de tarefas, além de configurar notificações, gerenciar permissões e
+visualizar relatórios gerais.
+
+​Diagrama de Caso de Uso – Visão do Usuário
+
+●​ Visão do Usuário
+
+Versão 0.1                                   dezembro de 2024
+Documento de Requisitos    Descrição geral do sistema – C1. P3 / 3
+
+●​ Visão do Administrador
+
+Versão 0.1                 dezembro de 2024
+Documento de Requisitos                                                      Requisitos funcionais – C2. P1 / 1
+
+                                                                                                      Capítulo
+
+                         R​ equisitos funcionais (casos de uso)
+
+Estoque
+
+[RF001] Adicionar Usuário a Lista de Tarefas
+
+RF 001         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial    ( ) Importante ( ) Desejável
+
+Atores:        Administrador
+Resumo:        Permitir que o administrador crie novos usuários no sistema.
+
+Pré-condição:  Administrador deve estar autenticado no sistema.
+
+Pós-condição:  Novo usuário é adicionado ao banco de dados do projeto.
+
+Interfaces:    I_PopUp_AdicionarMembro
+
+Fluxo principal: Aministrador:              Sistema:
+
+               1. Entra com o email do
+
+               usuário a ser adicionado     3. Sistema valida os dados e adiciona o usuário ao
+
+                                            projeto
+
+                                            5. Sistema confirma a adição bem-sucedida.
+
+Fluxo          Administrador:               Sistema:
+alternativo:                                4. Se os dados inseridos forem inválidos, o sistema
+               5. Corrige os dados e tenta  exibe uma mensagem de erro.
+               novamente.
+
+Regras de
+Negócio:
+
+[RF002] Ler Usuário
+
+RF 002         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial    ( ) Importante ( ) Desejável
+
+Atores:        Adminsitrador
+Resumo:        Permitir que o administrador visualize informações dos usuários cadastrados.
+
+Versão 0.1                                                                   dezembro de 2024
+Documento de Requisitos                                                        Requisitos funcionais – C2. P2 / 2
+
+Pré-condição:     Administrador deve estar autenticado no sistema.
+
+Pós-condição:     Informações do usuário são exibidas.
+
+Interfaces:       I_PopUp_AdicionarMembros
+Fluxo principal:
+                  Administrador               Sistema:
+
+                  1.Abre a tela de adicionar  2. Sistema exibe a lista de usuários cadastrados com
+                  membros                     informações básicas.
+
+Fluxo             Aluno:                      Sistema:
+alternativo:                                  2. Nenhum usuário cadastrado
+                                              3. Sistema exibe mensagem "Nenhum usuário
+                                              cadastrado."
+
+[RF003] Atualizar Usuário
+
+RF 003            Realizar cancelamento de disciplina.
+
+Prioridade:       (X) Essencial  ( ) Importante ( ) Desejável
+
+Atores:           Administrador
+Resumo:
+                  Permitir que o administrador atualize as permissões de um usuário existente em seu
+                  projeto.
+
+Pré-condição:     Administrador deve estar autenticado no sistema.
+
+Pós-condição:     As permissões do usuário são atualizadas no banco de dados.
+
+Interfaces:       I_PopUp_AdicionarMembros
+
+Fluxo principal: Aministrador:                Sistema:
+
+                  1. Escolhe a permissão do   2. Sistema apresenta as permissões disponíveis
+                  usuário em seu projeto.     (Usuário, Administrador)
+
+                  3.Administrador realiza as  4. Sistema valida os dados e atualiza as informações
+                  alterações necessárias e    do usuário.
+                  confirma a atualização
+
+                                              5. Sistema confirma a atualização bem-sucedida.
+
+Fluxo
+alternativo:
+
+Versão 0.1                                                                     dezembro de 2024
+Documento de Requisitos                                                      Requisitos funcionais – C2. P3 / 3
+
+Regras de      1 – O email do usuário deve permanecer único após a atualização.
+Negócio:       2 – A senha deve atender aos critérios de segurança caso seja alterada.
+
+[RF004] Criar Tarefa
+
+RF 004         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial        ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:        Permitir que usuários e administradores criem novas tarefas.
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:  Nova tarefa é adicionada ao banco de dados.
+
+Interfaces:    I_PopUp_CriarTarefa
+
+Fluxo principal: Usuário/Administrador::      Sistema:
+
+               1. Seleciona a opção "Criar
+
+               Tarefa”                        2. Sistema apresenta o formulário de criação de tarefa.
+
+               3.Preenche os dados
+               necessários (nome, descrição,
+               data de entrega, status,
+               prioridade).
+
+                                              4. Sistema valida os dados e cria a tarefa.
+
+                                              5. Sistema confirma a criação bem-sucedida.
+
+Fluxo          Administrador:                 Sistema:
+alternativo:
+               5. Corrige os dados e tenta    4. Se os dados inseridos forem inválidos, o sistema
+               novamente.                     exibe uma mensagem de erro.
+
+Regras de      1 – A data de vencimento da tarefa deve ser posterior à data atual.
+Negócio:       2 – A prioridade deve ser selecionada entre as opções disponíveis (Baixa, Média, Alta).
+
+[RF005] Ler Tarefa
+
+RF 005         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial        ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:        Permitir que usuários e administradores visualizem informações das tarefas existentes.
+
+Versão 0.1                                                                                 dezembro de 2024
+Documento de Requisitos                                                     Requisitos funcionais – C2. P4 / 4
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:  Informações da tarefa são exibidas.
+
+Interfaces:    I_ListarTarefas
+
+Fluxo principal: Usuário/Administrador::     Sistema:
+
+               3.Pode selecionar uma tarefa  2. Sistema exibe a lista de tarefas com informações
+               para visualizar detalhes      básicas (título, status, prioridade).
+               completos e gerenciar
+
+Fluxo          Administrador:                Sistema:
+alternativo:
+                                             2. Nenhuma Tarefa Cadastrada
+                                             3. Exibe mensagem "Nenhuma tarefa cadastrada."
+
+[RF006] Atualizar Tarefa
+
+RF 006         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial    ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:
+               Permitir que usuários e administradores atualizem as informações de uma tarefa
+               existente.
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:  Informações da tarefa são atualizadas no banco de dados.
+
+Interfaces:    I_PopUp_GerenciarTarefa
+
+Fluxo principal: Usuário/Administrador::     Sistema:
+
+               1.Seleciona a tarefa a ser    2. Apresenta o formulário com os dados atuais da
+               atualizada.                   tarefa..
+
+               3.Realiza as alterações       4. Valida os dados e atualiza as informações da tarefa.
+               necessárias e confirma.
+
+                                             5. Confirma a atualização bem-sucedida.
+
+Fluxo          Administrador:                Sistema:
+alternativo:
+               4. Corrige os dados e tenta   3. Se os dados inseridos forem inválidos, o sistema
+               novamente.                    exibe uma mensagem de erro.
+
+Versão 0.1                                                                            dezembro de 2024
+Documento de Requisitos                                                     Requisitos funcionais – C2. P5 / 5
+
+Regras de      1 – A data de vencimento da tarefa deve ser posterior à data atual.
+Negócio:       2 – A prioridade deve ser selecionada entre as opções disponíveis (Baixa, Média, Alta).
+
+[RF007] Deletar Tarefa
+
+RF 007         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial          ( ) Importante ( ) Desejável
+
+Atores:        Administrador
+Resumo:        Permitir que administradores removam uma tarefa do sistema.
+
+Pré-condição:  Administrador deve estar autenticado no sistema.
+
+Pós-condição:  Tarefa é removida do banco de dados.
+
+Interfaces:    I_ListarTarefas, I_PopUp_ExcluirTarefa
+
+Fluxo principal: Usuário/Administrador::       Sistema:
+
+               1.Seleciona o icone de lixeira
+
+               na tarefa desejada              2. Sistema solicita confirmação da ação.
+
+               3.Confirma a deleção.
+
+                                               4. Sistema remove a tarefa do banco de dados.
+
+                                               5. Sistema confirma a remoção bem-sucedida.
+
+Fluxo          Administrador:                  Sistema:
+alternativo:   3. Cancela a ação.              4. Não realiza nenhuma alteração no banco de dados.
+
+Regras de      1 – Não é possível deletar uma tarefa que está associada a projetos ou listas ativas.
+Negócio:       2 – Deve-se registrar a deleção para fins de auditoria.
+
+[RF008] Criar Lista de Tarefas
+
+RF 008         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial          ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:        Permitir que usuários e administradores criem novas listas de tarefas.
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+
+Versão 0.1                                                                               dezembro de 2024
+Documento de Requisitos                                                        Requisitos funcionais – C2. P6 / 6
+
+Pós-condição:     Nova lista de tarefas é adicionada ao banco de dados.
+
+Interfaces:       I_ListarTarefas                  Sistema:
+Fluxo principal:  Usuário/Administrador::
+
+                  1.Seleciona a opção "Novo
+
+                  projeto”                         2. Sistema apresenta o formulário de criação de lista
+
+                  3.Usuário preenche os dados
+                  necessários (nome da lista,
+                  descrição)
+
+                  4. Adiciona tarefas à lista, se
+                  desejado e confirma
+
+                                                           5. Valida os dados e cria a lista de tarefas.
+
+                                                   6. Confirma a criação bem-sucedida.
+
+Fluxo             Administrador:                   Sistema:
+alternativo:
+                  4. Corrige os dados e tenta      3. Se os dados inseridos forem inválidos, o sistema
+                  novamente.                       exibe uma mensagem de erro.
+
+Regras de         1 – O nome da lista de tarefas deve ser único por usuário.
+Negócio:          2 – A descrição da lista é opcional.
+
+[RF009] Ler Lista de Tarefa
+
+RF 009            Realizar cancelamento de disciplina.
+
+Prioridade:       (X) Essencial  ( ) Importante ( ) Desejável
+
+Atores:           Usuário, Administrador
+Resumo:
+                  Permitir que usuários e administradores visualizem informações das listas de tarefas
+                  existentes.
+
+Pré-condição:     Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:     Informações da lista de tarefas são exibidas.
+
+Interfaces:       I_Dashboard
+
+Fluxo principal: Usuário/Administrador::           Sistema:
+
+                  3.Pode selecionar uma lista      2. Sistema exibe a lista de listas de tarefas com
+                  para visualizar detalhes         informações básicas (nome, número de tarefas)
+                  completos e tarefas associadas.
+
+Versão 0.1                                                                              dezembro de 2024
+Documento de Requisitos                                                                    Requisitos funcionais – C2. P7 / 7
+
+Fluxo             Administrador:                  Sistema:
+alternativo:
+                                                  2. Nenhuma lista de tarefa cadastrada
+                                                  3. Exibe mensagem "Nenhuma lista de tarefa
+                                                  cadastrada."
+
+[RF010] Atualizar Lista de Tarefa
+
+RF 0010           Realizar cancelamento de disciplina.
+
+Prioridade:       (X) Essencial   ( ) Importante ( ) Desejável
+
+Atores:           Usuário, Administrador
+Resumo:
+                  Permitir que usuários e administradores atualizem as informações de uma lista de tarefas
+                  existente.
+
+Pré-condição:     Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:     Informações da lista de tarefas são atualizadas no banco de dados.
+
+Interfaces:       I_PopUp_GerenciarProjeto        Sistema:
+Fluxo principal:  Usuário/Administrador::
+
+                  1.Usuário seleciona o ícone de  2. Sistema apresenta o formulário com os dados atuais
+                  engrenagem na página            da lista.
+
+                  3.Realiza as alterações         4. Valida os dados e atualiza as informações da tarefa.
+                  necessárias e confirma.
+
+                                                  5. Confirma a atualização bem-sucedida.
+
+Fluxo             Administrador:                  Sistema:
+alternativo:
+                  4. Corrige os dados e tenta     3. Se os dados inseridos forem inválidos, o sistema
+                  novamente.                      exibe uma mensagem de erro.
+
+Regras de         1 – O nome da lista de tarefas deve permanecer único por usuário após a atualização.
+Negócio:          2 – A descrição da lista é opcional.
+
+[RF011] Deletar Lista de Tarefas
+
+RF 011            Realizar cancelamento de disciplina.
+
+Prioridade:       (X) Essencial   ( ) Importante ( ) Desejável
+
+Atores:           Usuário, Administrador
+Resumo:           Permitir que usuários e administradores removam uma lista de tarefas do sistema.
+
+Pré-condição:     Usuário ou administrador deve estar autenticado no sistema.
+
+Versão 0.1                                                                                 dezembro de 2024
+Documento de Requisitos                                                    Requisitos funcionais – C2. P8 / 8
+
+Pós-condição:  Lista de tarefas é removida do banco de dados.
+
+Interfaces:    I_Dashboard, I_PopUp_ExclusaoProjeto
+
+Fluxo principal: Usuário/Administrador::       Sistema:
+
+               1.Seleciona o ícone de lixeira  2. Sistema solicita confirmação da ação.
+               na página
+
+               3.Confirma a deleção.
+
+Fluxo          Administrador:                  4. Sistema remove a lsita de tarefas do banco de dados.
+alternativo:   3. Cancela a ação.              5. Sistema confirma a remoção bem-sucedida.
+                                               Sistema:
+
+                                               4. Não realiza nenhuma alteração no banco de dados.
+
+Regras de      1 – Não é possível deletar uma lista de tarefas que contém tarefas ativas.
+Negócio:       2 – Deve-se registrar a deleção para fins de auditoria.
+
+[RF012] Login
+
+RF 012         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial        ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:        Permitir que usuários e administradores façam login no sistema.
+
+Pré-condição:  Usuário ou administrador deve possuir credenciais válidas.
+
+Pós-condição:  Usuário ou administrador está autenticado no sistema.
+
+Interfaces:    I_Login
+
+Fluxo principal: Usuário/Administrador::       Sistema:
+
+               1.Acessa a página de login.
+                                                        .
+
+               2.Usuário insere email e senha.
+
+               3. Confirma o login             4. Valida as credenciais.
+
+                                               5. Redireciona o usuário para a página principal.
+
+Fluxo          Administrador:                  Sistema:
+alternativo:
+               4. Corrige os dados e tenta     3. Se os dados inseridos forem inválidos, o sistema
+               novamente.                      exibe a mensagem “Email ou senha inválidos”.
+
+Versão 0.1                                                                                 dezembro de 2024
+Documento de Requisitos                                                     Requisitos funcionais – C2. P9 / 9
+
+Regras de      2 – Senhas devem ser armazenadas de forma criptografada no banco de dados.
+Negócio:
+
+[RF013] Logout
+
+RF 013         Realizar cancelamento de disciplina.
+
+Prioridade:    (X) Essencial          ( ) Importante ( ) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:        Permitir que usuários e administradores façam logout do sistema.
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+
+Pós-condição:  Sessão do usuário ou administrador é encerrada.
+
+Interfaces:    I_Logout
+
+Fluxo principal: Usuário/Administrador::   Sistema:
+
+               1.Seleciona a opção logout  .
+                                           3. Encerra a sessão atual do usuário
+               2.Confirma a seleção.       4. Redireciona o usuário para a página de login
+                                           Sistema:
+Fluxo          Administrador:              3. Se a sessão tiver expirado, o sistema redireciona
+alternativo:                               automaticamente para a página de login.
+
+[RF014] Notificações e Lembretes
+
+RF 014         Realizar cancelamento de disciplina.
+
+Prioridade:    ( ) Essencial          () Importante (X) Desejável
+
+Atores:        Usuário, Administrador
+Resumo:
+               Permitir que o sistema envie notificações sobre prazos, atualizações de tarefas e outras
+               atividades relevantes.
+
+Pré-condição:  Usuário ou administrador deve estar autenticado no sistema.
+Pós-condição:  Notificações são enviadas conforme eventos ou horários programados.
+Interfaces:    I_Notificacoes
+
+Versão 0.1                                                                          dezembro de 2024
+Documento de Requisitos                             Requisitos funcionais – C2. P10 / 10
+
+Fluxo principal: Usuário/Administrador::  Sistema:
+
+                                          1. Sistema detecta um evento que requer notificação
+                                          (ex.: prazo de tarefa próximo).
+
+                                                       2. Sistema envia a notificação ao usuário ou
+              3.Recebe e visualiza a administrador.
+              notificação.
+
+Fluxo         Administrador:              Sistema:
+alternativo:                              2. Envio da notificação falha
+
+                                          3. Sistema registra a falha e tenta reenviar
+                                          posteriormente.
+
+Regras de                                              4. Administrador é notificado sobre a falha
+Negócio:
+              1 – Usuários podem configurar suas preferências de notificações.
+              2 – Notificações devem ser enviadas via email e/ou dentro do próprio sistema.
+
+Versão 0.1                                                               dezembro de 2024
+Documento de Requisitos                           Requisitos não funcionais – C3. P1 / 1
+
+                                                                                      Capítulo
+
+                                    R​ equisitos não funcionais
+
+​Usabilidade
+
+        Esta seção descreve os requisitos não funcionais associados à facilidade de uso da interface
+        com o usuário, material de treinamento e documentação do sistema.
+
+[NF001] Interface Intuitiva
+        A interface do sistema deve ser intuitiva e de fácil navegação para garantir uma boa experiência
+        do usuário.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+[NF002] Responsividade
+
+       A interface do sistema deve ser responsiva, adaptando-se a diferentes tamanhos de tela e
+       dispositivos.
+
+Prioridade: ◻ Essencial             Importante    ◻ Desejável
+
+C​ onfiabilidade
+
+        Esta seção descreve os requisitos não funcionais associados à freqüência, severidade de falhas
+        do sistema e habilidade de recuperação das mesmas, bem como à corretude do sistema.
+
+[NF003] Disponibilidade do Sistema
+        O sistema deve estar disponível 99,9% do tempo, garantindo que os usuários possam acessar as
+        funcionalidades sempre que necessário.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+[NF004] Backup de dados
+
+         O sistema deve realizar backups automáticos dos dados diariamente para prevenir perdas de
+         informação.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+Desempenho
+
+        Esta seção descreve os requisitos não funcionais associados à eficiência, uso de recursos e
+        tempo de resposta do sistema.
+
+Versão 0.1                                        dezembro de 2024
+Documento de Requisitos                           Requisitos não funcionais – C3. P2 / 2
+
+[NF005] Tempo de Resposta
+
+        As páginas do sistema devem carregar em até 2 segundos para garantir uma experiência de uso
+        fluida.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+[NF006] Escalabilidade
+
+        O sistema deve ser escalável para suportar um aumento no número de usuários e dados sem
+        degradação de desempenho.
+
+Prioridade: ◻ Essencial             Importante    ◻ Desejável
+
+Segurança
+
+        Esta seção descreve os requisitos não funcionais associados à integridade, privacidade e
+        autenticidade dos dados do sistema.
+
+[NF007] Criptografia de Dados
+        Todos os dados sensíveis, incluindo senhas e informações pessoais, devem ser criptografados
+        no banco de dados.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+[NF008] Comunicação Segura
+
+        Toda comunicação entre o frontend e o backend deve ser realizada através de conexões seguras
+        (HTTPS).
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+[NF009] Autenticação e Autorização
+
+        O sistema deve implementar mecanismos robustos de autenticação e autorização para garantir
+        que apenas usuários autorizados possam acessar e modificar os dados.
+
+Prioridade:              Essencial  ◻ Importante  ◻ Desejável
+
+Distribuição
+
+        Esta seção descreve os requisitos não funcionais associados à distribuição da versão executável
+        do sistema.
+
+[NF010] Acesso via web
+        O sistema deve estar acessível através de navegadores web modernos sem necessidade de
+        instalação de software adicional.
+
+Versão 0.1                                        dezembro de 2024
+Documento de Requisitos         Importante    Requisitos não funcionais – C3. P3 / 3
+
+       Prioridade: ◻ Essencial                    ◻ Desejável
+
+​Padrões
+
+        Esta seção descreve os requisitos não funcionais associados a padrões ou normas que devem ser
+        seguidos pelo sistema ou pelo seu processo de desenvolvimento.
+        <Se você mencionar documentos relacionados, não esqueça de listá-los na seção 1.3.>
+
+[NF011] Conformidade com Padrões Web
+        O sistema deve seguir os padrões web estabelecidos pelo W3C para garantir compatibilidade e
+        acessibilidade.
+
+Prioridade: ◻ Essencial         ◻ Importante  Desejável
+
+​Hardware e software
+
+        Esta seção descreve os requisitos não funcionais associados ao hardware e software usados para
+        desenvolver ou para executar o sistema.
+
+[NF012] Requisitos de Servidor
+        O servidor deve possuir no mínimo 8 GB de RAM, 4 CPUs e 100 GB de armazenamento para
+        suportar o funcionamento do sistema.
+
+Prioridade: ◻ Essencial         Importante    ◻ Desejável
+
+[NF013] Compatibilidade de Navegadores
+
+        O sistema deve ser compatível com os principais navegadores web, incluindo Google Chrome,
+        Mozilla Firefox, Microsoft Edge e Safari.
+
+Prioridade:  Essencial          ◻ Importante  ◻ Desejável
+
+Versão 0.1                                    dezembro de 2024
+Documento de Requisitos                         Descrição da interface com o usuário – C4. P1 / 1
+
+                                                                                                     Capítulo
+
+              ​Descrição da interface com o usuário
+
+        Neste documento, adota-se “I_” para indicar uma interface. Assim, a interface de login do
+        sistema é nomeada como “I_Login”.
+
+​PROTOTIPAÇÃO
+
+I_Login: Tela de login onde os usuários inserem suas credenciais para acessar o sistema.
+
+I_SignUp: Tela de cadastro de um novo usuário.
+
+Versão 0.1                                      dezembro de 2024
+Documento de Requisitos                 Descrição da interface com o usuário – C4. P2 / 2
+
+I_Dashboard: Página principal após o login, exibindo um resumo dos projetos e tarefas.
+
+I_PopUp_LogOut: PopUp para confirmar o logout do usuário.v
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                   ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                   ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                   ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                   ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                   ​  ​  ​
+
+Versão 0.1                                                        dezembro de 2024
+Documento de Requisitos                 Descrição da interface com o usuário – C4. P3 / 3
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​                         ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​                         ​
+
+I_PopUp_ExclusaoProjeto: PopUp para confirmar a exclusão de um projeto
+
+I_PopUp_CriarProjeto: PopUp com um formulário para a criação de um projeto.
+
+Versão 0.1                                                              dezembro de 2024
+Documento de Requisitos                                Descrição da interface com o usuário – C4. P4 / 4
+
+   ​        ​     ​         ​     ​     ​     ​     ​     ​     ​     ​       ​
+
+                                        ​     ​
+
+I_ConfiguracoesUsuario: Página onde os usuários podem alterar seus dados.
+
+I_PopUp_MudarSenha: PopUp com um formulário para a alteração de senha.
+
+​     ​        ​         ​     ​     ​     ​     ​     ​     ​     ​       ​
+
+​     ​        ​         ​     ​     ​     ​     ​     ​     ​     ​
+
+Versão 0.1                                                                 dezembro de 2024
+Documento de Requisitos                 Descrição da interface com o usuário – C4. P5 / 5
+
+I_ListarTarefas: Lista de todas as tarefas de determinado projeto.
+
+I_PopUp_GerenciarProjeto: PopUp com um formulário para a administração do projeto.
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                           ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                           ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                           ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​                           ​
+
+Versão 0.1                                                                dezembro de 2024
+Documento de Requisitos                 Descrição da interface com o usuário – C4. P6 / 6
+
+I_PopUp_CriarTarefa: PopUp com um formulário para criação de novas tarefas.
+
+I_PopUp_GerenciarTarefa: PopUp com um formulário para a alteração de uma tarefa.
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​  ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​  ​
+
+Versão 0.1                                       dezembro de 2024
+Documento de Requisitos                 Descrição da interface com o usuário – C4. P7 / 7
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​  ​                       ​
+
+​  ​        ​            ​  ​  ​  ​  ​  ​  ​
+
+I_PopUp_ExcluirTarefa: PopUp para confirmar a remoção de uma tarefa.
+
+I_PopUp_AdicionarMembro: PopUp com um formulário para a adição, remoção e
+alteração de membros no projeto.
+
+Versão 0.1                                                            dezembro de 2024
+Documento de Requisitos                                       Descrição da interface com o usuário – C4. P8 / 8
+
+                                                                                            Capítulo
+
+                                                        D​ icionário de Dados
+
+    Tabela                                         Usuário
+
+    Descrição                    Armazenará as informações dos usuários
+
+Observações
+
+                                           Campos
+
+        Nome                  Descrição                           Tipo de Dado
+
+id_usuario      Identificador único do usuário              UUID
+
+nome            Nome completo do usuário                    VARCHAR(100)
+
+email           Email único do usuário                      VARCHAR(100)
+
+senha           Senha criptografada do usuário              VARCHAR(255)
+
+funcao          Função do usuário no sistema                ENUM('Usuário','Administrador')
+
+data_criacao Data e hora de criação do usuário              DATETIME
+
+    Tabela                                         Projeto
+
+    Descrição                    Armazenará as informações dos projetos
+
+Observações
+
+                                           Campos
+
+        Nome                  Descrição                           Tipo de Dado
+
+id_projeto      Identificador único do projeto              UUID
+
+nome            Nome do projeto                             VARCHAR(100)
+
+descricao       Descrição detalhada do projeto              TEXT
+
+data_inicio     Data de início do projeto                   DATE
+
+data_fim        Data de término do projeto                  DATE
+
+id_administrad
+
+or              Referência ao administrador responsável UUID (FK)
+
+    Tabela                                              Tarefa
+
+    Descrição                    Armazenará as informações das tarefas
+
+Observações
+
+                                                Campos
+
+    Nome                 Descrição                                    Tipo de Dado
+
+id_tarefa       UUID                                    Identificador único da tarefa
+
+titulo          VARCHAR(100)                            Título da tarefa
+
+Versão 0.1                                                                             dezembro de 2024
+Documento de Requisitos                                      Descrição da interface com o usuário – C4. P9 / 9
+
+descricao      TEXT                                  Descrição detalhada da tarefa
+
+data_vencime                                         Data de vencimento da tarefa
+                                                     Prioridade da tarefa
+nto            DATE
+                                                     Status atual da tarefa
+prioridade     ENUM('Baixa','Média','Alta')          Referência ao projeto associado
+                                                     Referência ao usuário responsável pela
+status         ENUM('Pendente','Em                   tarefa
+               Progresso','Concluída')
+
+id_projeto     UUID (FK)
+
+id_responsave
+
+l              UUID (FK)
+
+     Tabela                                  ListaTarefas
+
+   Descrição                 Armazenará as informações das listas de tarefas
+
+Observações
+
+                                             Campos
+
+     Nome                 Descrição                        Tipo de Dado
+
+id_lista       UUID                                  Identificador único da lista de tarefas
+
+nome           VARCHAR(100)                          Nome da lista de tarefas
+
+descricao      TEXT                                  Descrição detalhada da lista de tarefas
+
+id_usuario UUID (FK)                                 Referência ao usuário proprietário da lista
+
+Chaves Primárias:
+
+    ●​ id_usuario em Usuário
+    ●​ id_projeto em Projeto
+    ●​ id_tarefa em Tarefa
+    ●​ id_lista em ListaTarefas
+    ●​ id_notificacao em Notificacao
+
+Chaves Estrangeiras:
+
+    ●​ id_administrador em Projeto referencia id_usuario em Usuário
+    ●​ id_projeto em Tarefa referencia id_projeto em Projeto
+    ●​ id_responsavel em Tarefa referencia id_usuario em Usuário
+    ●​ id_usuario em ListaTarefas referencia id_usuario em Usuário
+    ●​ id_usuario em Notificacao referencia id_usuario em Usuário
+
+Versão 0.1                                                                     dezembro de 2024
+
