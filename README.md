@@ -66,24 +66,6 @@ Para conseguir rodar na sua máquina, siga o passo a passo a seguir.
 ```sh
 https://nodejs.org/en/download/
 ```
-
-> [!TIP]
-> - Recomendamos [nvm](https://github.com/nvm-sh/nvm) para gerenciar as versões do Node (Linux e Mac)
-> - Se está utilizando Windows, existe a opção do [nvm-windows](https://github.com/coreybutler/nvm-windows)
-
-- [PNPM](https://pnpm.io/installation) - se algum dos comandos abaixo não funcionar, consulte a [documentação da ferramenta](https://pnpm.io/)
-
-   - Linux/OSX
-
-      ```sh
-      curl -fsSL https://get.pnpm.io/install.sh | sh -
-      ```
-
-   - Windows
-
-      ```sh
-      iwr https://get.pnpm.io/install.ps1 -useb | iex
-      ```
       
 ## Instalação
 
