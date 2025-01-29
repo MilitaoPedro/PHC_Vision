@@ -18,6 +18,7 @@ app.get('/usuarios', async (req, res) => {
                 id_usuario: true,
                 nome: true,
                 email: true,
+                senha: true,
                 projetosLiderados: {
                     select: {
                         id_projeto: true,
@@ -46,125 +47,277 @@ app.get('/usuarios', async (req, res) => {
     }
 });
 
-// Atualizar usuário específico
+// Rota para atualização de usuário
 app.put('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
-    const { nome, email } = req.body;
+    const { nome, email, senha } = req.body;
 
     try {
         // Validação dos dados de entrada
-        if (!nome && !email) {
+        if (!nome && !email && !senha) {
             return res.status(400).json({
-                message: 'Pelo menos um campo (nome ou email) deve ser fornecido'
+                success: false,
+                message: 'É necessário fornecer ao menos um campo para atualização',
+                details: {
+                    camposDisponiveis: ['nome', 'email', 'senha'],
+                    camposRecebidos: Object.keys(req.body)
+                }
             });
         }
 
-        // Verificação de email duplicado
-        if (email) {
+        // Verifica se o usuário existe e carrega dados necessários
+        const usuarioExistente = await prisma.usuario.findUnique({
+            where: { id_usuario: id },
+            select: {
+                id_usuario: true,
+                email: true,
+                nome: true,
+                senha: true,
+                projetosLiderados: {
+                    select: {
+                        id_projeto: true,
+                        nome: true
+                    }
+                }
+            }
+        });
+
+        if (!usuarioExistente) {
+            return res.status(404).json({
+                success: false,
+                message: 'Usuário não encontrado',
+                details: { userId: id }
+            });
+        }
+
+        // Validação de email
+        if (email && email !== usuarioExistente.email) {
             const emailExistente = await prisma.usuario.findFirst({
                 where: {
                     email,
-                    NOT: {
-                        id_usuario: id
-                    }
+                    NOT: { id_usuario: id }
                 }
             });
 
             if (emailExistente) {
                 return res.status(400).json({
-                    message: 'Este email já está em uso'
+                    success: false,
+                    message: 'Este email já está em uso',
+                    details: { emailFornecido: email }
                 });
             }
         }
 
+        // Prepara dados para atualização
+        const dadosAtualizacao = {};
+        
+        if (nome) {
+            const nomeProcessado = nome.trim();
+            if (nomeProcessado.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'O nome não pode estar vazio'
+                });
+            }
+            dadosAtualizacao.nome = nomeProcessado;
+        }
+
+        if (email) {
+            dadosAtualizacao.email = email.toLowerCase().trim();
+        }
+
+        if (senha) {
+            dadosAtualizacao.senha = senha;
+        }
+
+        // Atualiza o usuário
         const usuarioAtualizado = await prisma.usuario.update({
-            where: { 
-                id_usuario: id 
-            },
-            data: {
-                ...(nome && { nome }),
-                ...(email && { email })
-            },
+            where: { id_usuario: id },
+            data: dadosAtualizacao,
             select: {
                 id_usuario: true,
                 nome: true,
-                email: true
+                email: true,
+                senha: true
             }
         });
 
         return res.json({
+            success: true,
             message: 'Usuário atualizado com sucesso',
             usuario: usuarioAtualizado
         });
+
     } catch (error) {
-        console.error('Erro ao atualizar usuário:', error);
-        
-        if (error.code === 'P2025') {
-            return res.status(404).json({
-                message: 'Usuário não encontrado'
+        console.error('Erro ao atualizar usuário:', {
+            userId: id,
+            errorMessage: error.message,
+            errorCode: error.code
+        });
+
+        if (error.code === 'P2002') {
+            return res.status(400).json({
+                success: false,
+                message: 'Violação de campo único',
+                details: {
+                    campo: error.meta?.target?.[0]
+                }
             });
         }
 
         return res.status(500).json({
-            message: 'Erro interno ao atualizar usuário',
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            success: false,
+            message: 'Erro interno ao atualizar usuário'
         });
     }
 });
 
 // Deletar usuário específico
-app.delete('/usuarios/:id', async (req, res) => {
+// Rota para deleção de usuário
+app.delete('/usuarios/deletar/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Verifica se o usuário existe e suas relações
+        // Busca inicial do usuário com todas suas relações
         const usuario = await prisma.usuario.findUnique({
-            where: { id_usuario: id },
+            where: { 
+                id_usuario: id 
+            },
             include: {
-                projetosLiderados: true,
-                tarefas: true,
-                MembrosDoProjeto: true
+                // Projetos onde é líder
+                projetosLiderados: {
+                    select: {
+                        id_projeto: true,
+                        nome: true
+                    }
+                },
+                // Tarefas associadas
+                tarefas: {
+                    select: {
+                        id_tarefa: true,
+                        titulo: true
+                    }
+                },
+                // Participação em projetos
+                MembrosDoProjeto: {
+                    select: {
+                        id_usuario: true,
+                        id_projeto: true,
+                        projeto: {
+                            select: {
+                                id_projeto: true,
+                                nome: true
+                            }
+                        }
+                    }
+                }
             }
         });
 
+        // Verificação de existência do usuário
         if (!usuario) {
             return res.status(404).json({
-                message: 'Usuário não encontrado'
+                success: false,
+                message: 'Usuário não encontrado',
+                details: { 
+                    userId: id,
+                    timestamp: new Date().toISOString() 
+                }
             });
         }
 
-        // Verifica se o usuário pode ser deletado
+        // Validação de regras de negócio para exclusão
         if (usuario.projetosLiderados.length > 0) {
-            return res.status(400).json({
-                message: 'Não é possível deletar um usuário que é líder de projetos'
+            const projetosAtivos = usuario.projetosLiderados.filter(p => p.status === 'Em andamento');
+            
+            if (projetosAtivos.length > 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Não é possível deletar um usuário que é líder de projetos ativos',
+                    details: {
+                        projetosAtivos: projetosAtivos.map(p => ({
+                            id: p.id_projeto,
+                            nome: p.nome
+                        }))
+                    }
+                });
+            }
+        }
+
+        // Execução da deleção em transação atômica
+        await prisma.$transaction(async (prisma) => {
+            // 1. Remove associações em projetos
+            if (usuario.MembrosDoProjeto.length > 0) {
+                await prisma.membrosDoProjeto.deleteMany({
+                    where: {
+                        id_membro: {
+                            in: usuario.MembrosDoProjeto.map(m => m.id_membro)
+                        }
+                    }
+                });
+            }
+
+            // 2. Atualiza tarefas vinculadas
+            if (usuario.tarefas.length > 0) {
+                await prisma.tarefa.updateMany({
+                    where: {
+                        id_usuario: id
+                    },
+                    data: {
+                        id_usuario: null
+                    }
+                });
+            }
+
+            // 3. Remove o usuário
+            await prisma.usuario.delete({
+                where: { 
+                    id_usuario: id 
+                }
+            });
+        });
+
+        // Log de auditoria
+        console.log('Usuário removido com sucesso:', {
+            userId: id,
+            tarefasAtualizadas: usuario.tarefas.length,
+            projetosDesvinculados: usuario.MembrosDoProjeto.length,
+            timestamp: new Date().toISOString()
+        });
+
+        // Retorno de sucesso com detalhes da operação
+        return res.json({
+            success: true,
+            message: 'Usuário removido com sucesso',
+            details: {
+                tarefasReassociadas: usuario.tarefas.length,
+                projetosDesvinculados: usuario.MembrosDoProjeto.length,
+                timestamp: new Date().toISOString()
+            }
+        });
+
+    } catch (error) {
+        // Log detalhado do erro
+        console.error('Erro na remoção do usuário:', {
+            userId: id,
+            errorMessage: error.message,
+            errorCode: error.code,
+            timestamp: new Date().toISOString()
+        });
+
+        // Tratamento específico de erros conhecidos
+        if (error.code === 'P2025') {
+            return res.status(404).json({
+                success: false,
+                message: 'Usuário não encontrado ou já foi removido'
             });
         }
 
-        // Executa a deleção em transação
-        await prisma.$transaction([
-            // Remove associações de projetos
-            prisma.membrosDoProjeto.deleteMany({
-                where: { id_usuario: id }
-            }),
-            // Atualiza tarefas para remover referência
-            prisma.tarefa.updateMany({
-                where: { id_usuario: id },
-                data: { id_usuario: null }
-            }),
-            // Remove o usuário
-            prisma.usuario.delete({
-                where: { id_usuario: id }
-            })
-        ]);
-
-        return res.json({
-            message: 'Usuário deletado com sucesso'
-        });
-    } catch (error) {
-        console.error('Erro ao deletar usuário:', error);
+        // Retorno genérico para outros erros
         return res.status(500).json({
-            message: 'Erro interno ao deletar usuário',
-            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            success: false,
+            message: 'Erro interno ao processar a remoção do usuário',
+            errorId: new Date().getTime()
         });
     }
 });

@@ -33,7 +33,13 @@ const NormalLoginForm = () => {
       console.log("Login successful: ", data);
       message.success('Login efetuado com sucesso!');
 
-      router.push("/pages/Dashboard");
+      if(email == "pedrommr04@tyiu.com" && password == "1234"){
+        router.push("/pages/Admin");
+      } else {
+        router.push("/pages/Dashboard")
+      }
+
+      
 
       // Use the login function from context to set the user and token
       login(data.user, data.token);  // Assuming the server response contains user data and token

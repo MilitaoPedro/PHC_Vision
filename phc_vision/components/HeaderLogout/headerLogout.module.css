@@ -1,0 +1,49 @@
+.headerContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    background-color: #F8F8F8;
+    box-shadow: 1px 1px 5px 0px #7083FE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5%;
+}
+
+.logoContainer {
+    background-image: url("../../assets/images/logo.png");
+    height: 22px;
+    width: 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain
+}
+
+.itemsContainer {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    height: 100%;
+    width: 40%;
+}
+
+.itemContainer {
+    display: flex;
+    padding: 17px;
+    align-items: initial;
+    border-radius: 20px 20px 0px 0px;
+    height: 85%;
+    cursor: pointer;
+    background-color: #F8F8F8;
+    font-size: larger;
+}
+
+.itemsLink {
+    text-decoration: none;
+    color: #677bFF;
+    background-color: #F8F8F8;
+    font-weight: bolder;
+}
+

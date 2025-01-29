@@ -1,7 +1,7 @@
 'use client';
 
 import styles from "./page.module.css";
-import Header from "../../../components/Header/header";
+import HeaderLogout from "../../../components/HeaderLogout/headerLogout";
 import {
   Modal,
   Form,
@@ -23,7 +23,8 @@ import {
   ExclamationCircleOutlined,
   ProjectOutlined,
   CheckCircleOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  LockOutlined
 } from "@ant-design/icons";
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -101,36 +102,73 @@ export default function AllUser() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3001/usuarios/${currentUser.id_usuario}`, {
+      const response = await fetch(`http://localhost:3001/usuarios/deletar/${currentUser.id_usuario}`, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
+        
+        if (response.status === 400) {
+            throw new Error(errorData?.message || 'Não é possível excluir este usuário no momento');
+        }
+        if (response.status === 404) {
+            throw new Error('Usuário não encontrado ou já foi removido');
+        }
         throw new Error(errorData?.message || 'Erro ao excluir usuário');
-      }
+    }
 
-      setUsuarios(prevUsers => 
+    const result = await response.json();
+
+    setUsuarios(prevUsers => 
         prevUsers.filter(user => user.id_usuario !== currentUser.id_usuario)
-      );
+    );
       
       notification.success({
-        message: 'Usuário excluído',
-        description: 'O usuário foi excluído com sucesso.',
-        icon: <CheckCircleOutlined style={{ color: '#52c41a' }} />
-      });
+        message: 'Usuário excluído com sucesso',
+        description: (
+            <div>
+                <p>O usuário foi removido do sistema.</p>
+                {result.details && (
+                    <ul style={{ marginTop: '8px', marginBottom: 0 }}>
+                        <li>Tarefas desvinculadas: {result.details.tarefasReassociadas}</li>
+                        <li>Projetos removidos: {result.details.projetosDesvinculados}</li>
+                    </ul>
+                )}
+            </div>
+        ),
+        icon: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+        duration: 5
+    });
       
       setIsDeleteModalOpen(false);
       setCurrentUser(null);
     } catch (error) {
-      console.error('Erro na deleção:', error);
-      notification.error({
-        message: 'Erro ao excluir',
-        description: error.message,
-        duration: 4.5
-      });
+        console.error('Erro na deleção:', {
+            userId: currentUser.id_usuario,
+            error: error.message
+        });
+
+        notification.error({
+            message: 'Erro ao excluir usuário',
+            description: error.message,
+            duration: 4.5,
+            btn: (
+                <Button 
+                    type="primary" 
+                    size="small" 
+                    onClick={() => handleDelete()}
+                    icon={<ReloadOutlined />}
+                >
+                    Tentar novamente
+                </Button>
+            )
+        });
     } finally {
-      setSubmitting(false);
+        setSubmitting(false);
     }
   };
 
@@ -214,7 +252,7 @@ export default function AllUser() {
 
   return (
     <div className={styles.backgroundContainer}>
-      <Header />
+      <HeaderLogout />
       <div className={styles.contentContainer}>
         <h1 className={styles.pageTitle}>Gerenciamento de Usuários</h1>
         <hr className={styles.hr} />
@@ -251,6 +289,10 @@ export default function AllUser() {
                   <p>
                     <MailOutlined className={styles.icon} />
                     <strong>Email:</strong> {user.email}
+                  </p>
+                  <p>
+                    <LockOutlined className={styles.icon} />
+                    <strong>Senha:</strong> {user.senha}
                   </p>
                   <Tooltip title="ID do usuário">
                     <p>
@@ -335,6 +377,19 @@ export default function AllUser() {
               <Input 
                 prefix={<MailOutlined />}
                 placeholder="email@exemplo.com" 
+              />
+            </Form.Item>
+            <Form.Item
+              name="senha"
+              label="Senha"
+              rules={[
+                { required: true, message: 'Por favor, insira a nova senha' },
+                { type: 'password', message: 'Senha invílida' }
+              ]}
+            >
+              <Input 
+                prefix={<LockOutlined />}
+                placeholder="1234" 
               />
             </Form.Item>
             <Form.Item className={styles.modalButtons}>
