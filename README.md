@@ -26,10 +26,11 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 
 
 * Padrões Adotados: Diretório contendo regras de verificação e análise de requisitos.
-* Requisitos: Inclui diagramas, documentos de casos de uso, e outros artefatos necessários para o desenvolvimento do projeto.
-* DiagramasDeSequência: Contém diagramas de sequência em formato JPEG.
-* DiagramasDeClasses: Contém diagramas de classes.
-* DiagramasDeImplantação: Contém diagramas de implantação.
+* Requisitos: Inclui diagramas, documento de requisitos, e outros artefatos necessários para o desenvolvimento do projeto.
+* DiagramaDeSequência: Contém diagramas de sequência em formato JPEG.
+* DiagramaDeClasses: Contém diagramas de classes.
+* DiagramaDeImplantação: Contém diagramas de implantação.
+* DiagramaDePacotes: Contém diagramas pacotes.
 * Documentação de Requisitos: Inclui documentos de requisitos em formato PDF.
 
 
@@ -43,6 +44,16 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 * Uso de Objetos para Agrupar Parâmetros: Facilita a leitura e manutenção de funções com múltiplos parâmetros relacionados.
 * Evitar Código Duplicado: Reutilizar código através de funções e componentes reutilizáveis para manter a consistência e facilitar manutenção.
 
+
+## Mensagens de Commit
+
+#### Mensagens curtas e autoexplicativas.
+
+Utilizar um prefixo que indica o tipo de mudança: 
+- create: Adição de novas funcionalidades e/ou linhas de código.
+- fix: Correção de bug.
+- docs: Mudanças na documentação.
+- style: Mudanças que não afetam o significado do código (espaços em branco, formatação, ponto e vírgula faltando, etc).
 
 ## Iniciando o desenvolvimento
 
