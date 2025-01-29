@@ -17,6 +17,7 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 ## Ferramentas
 
  - Node.js (v20.17.0)
+ - NextJs (v15.1.6)
  - React Framework (v19.0)
  - Express (v4.21.2)
  - Prisma (v6.3.0)
