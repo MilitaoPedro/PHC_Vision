@@ -1,9 +1,10 @@
-
+"use client"
     import styles from "./page.module.css";
     import Header from "../../../components/Header/header";
     import Tarefa from "../../../components/Tarefa/tarefa";
-    import MembrosCard from "@/components/MembrosCard/MembrosCard";
-    import prisma from "@/prisma/cliente";
+    import MembrosCard from "../../../components/MembrosCard/MembrosCard";
+
+
 
     import { useRouter } from "next/navigation";
 
