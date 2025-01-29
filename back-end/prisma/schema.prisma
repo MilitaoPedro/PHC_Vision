@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Ajuste o provider conforme o banco utilizado (ex: mysql, sqlite, etc.)
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id_usuario String   @id @default(uuid()) @map("id_usuario")
+  nome       String   @db.VarChar(100)
+  email      String   @unique @db.VarChar(100)
+  senha      String   @db.VarChar(255)
+
+  // Relacionamentos
+  projetosLiderados Projeto[] @relation("UsuarioAdministraProjetos")
+  tarefas          Tarefa[]
+  projetos         Projeto[] @relation("MembrosDoProjeto")
+
+  @@map("Usuario")
+  MembrosDoProjeto MembrosDoProjeto[]
+}
+
+model Projeto {
+  id_projeto      String    @id @default(uuid()) @map("id_projeto")
+  nome            String    @db.VarChar(100)
+  descricao       String?
+  data_prevista   DateTime?
+  id_administrador String   @map("id_administrador")
+
+  // Relacionamentos
+  administrador   Usuario   @relation("UsuarioAdministraProjetos", fields: [id_administrador], references: [id_usuario])
+  tarefas         Tarefa[]
+  membros         Usuario[] @relation("MembrosDoProjeto")
+
+  @@map("Projeto")
+  MembrosDoProjeto MembrosDoProjeto[]
+}
+
+model Tarefa {
+  id_tarefa   String    @id @default(uuid()) @map("id_tarefa")
+  titulo      String    @db.VarChar(100)
+  descricao   String?
+  prioridade  Prioridade
+  status      Status
+  id_projeto  String    @map("id_projeto")
+  id_usuario  String    @map("id_responsavel")
+
+  // Relacionamentos
+  projeto     Projeto   @relation(fields: [id_projeto], references: [id_projeto])
+  responsavel Usuario   @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@map("Tarefa")
+}
+
+enum Prioridade {
+  Baixa
+  Média
+  Alta
+}
+
+enum Status {
+  Todo
+  Doing
+  Done
+}
+
+// Relação many-to-many entre Projetos e Usuários (não administradores)
+model MembrosDoProjeto {
+  id_projeto  String   @map("id_projeto")
+  id_usuario  String   @map("id_usuario")
+
+  // Relacionamentos
+  projeto     Projeto  @relation(fields: [id_projeto], references: [id_projeto])
+  usuario     Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+
+  @@id([id_projeto, id_usuario])
+  @@map("MembrosDoProjeto")
+}
