@@ -8,6 +8,167 @@ const prisma = new PrismaClient();
 app.use(express.json());
 app.use(cors());
 
+// Usuario
+
+// Listar todos os usuários
+app.get('/usuarios', async (req, res) => {
+    try {
+        const usuarios = await prisma.usuario.findMany({
+            select: {
+                id_usuario: true,
+                nome: true,
+                email: true,
+                projetosLiderados: {
+                    select: {
+                        id_projeto: true,
+                        nome: true
+                    }
+                },
+                tarefas: {
+                    select: {
+                        id_tarefa: true,
+                        titulo: true
+                    }
+                }
+            },
+            orderBy: {
+                nome: 'asc'
+            }
+        });
+
+        return res.json(usuarios);
+    } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        return res.status(500).json({ 
+            message: 'Erro interno ao buscar usuários',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
+// Atualizar usuário específico
+app.put('/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+    const { nome, email } = req.body;
+
+    try {
+        // Validação dos dados de entrada
+        if (!nome && !email) {
+            return res.status(400).json({
+                message: 'Pelo menos um campo (nome ou email) deve ser fornecido'
+            });
+        }
+
+        // Verificação de email duplicado
+        if (email) {
+            const emailExistente = await prisma.usuario.findFirst({
+                where: {
+                    email,
+                    NOT: {
+                        id_usuario: id
+                    }
+                }
+            });
+
+            if (emailExistente) {
+                return res.status(400).json({
+                    message: 'Este email já está em uso'
+                });
+            }
+        }
+
+        const usuarioAtualizado = await prisma.usuario.update({
+            where: { 
+                id_usuario: id 
+            },
+            data: {
+                ...(nome && { nome }),
+                ...(email && { email })
+            },
+            select: {
+                id_usuario: true,
+                nome: true,
+                email: true
+            }
+        });
+
+        return res.json({
+            message: 'Usuário atualizado com sucesso',
+            usuario: usuarioAtualizado
+        });
+    } catch (error) {
+        console.error('Erro ao atualizar usuário:', error);
+        
+        if (error.code === 'P2025') {
+            return res.status(404).json({
+                message: 'Usuário não encontrado'
+            });
+        }
+
+        return res.status(500).json({
+            message: 'Erro interno ao atualizar usuário',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
+// Deletar usuário específico
+app.delete('/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Verifica se o usuário existe e suas relações
+        const usuario = await prisma.usuario.findUnique({
+            where: { id_usuario: id },
+            include: {
+                projetosLiderados: true,
+                tarefas: true,
+                MembrosDoProjeto: true
+            }
+        });
+
+        if (!usuario) {
+            return res.status(404).json({
+                message: 'Usuário não encontrado'
+            });
+        }
+
+        // Verifica se o usuário pode ser deletado
+        if (usuario.projetosLiderados.length > 0) {
+            return res.status(400).json({
+                message: 'Não é possível deletar um usuário que é líder de projetos'
+            });
+        }
+
+        // Executa a deleção em transação
+        await prisma.$transaction([
+            // Remove associações de projetos
+            prisma.membrosDoProjeto.deleteMany({
+                where: { id_usuario: id }
+            }),
+            // Atualiza tarefas para remover referência
+            prisma.tarefa.updateMany({
+                where: { id_usuario: id },
+                data: { id_usuario: null }
+            }),
+            // Remove o usuário
+            prisma.usuario.delete({
+                where: { id_usuario: id }
+            })
+        ]);
+
+        return res.json({
+            message: 'Usuário deletado com sucesso'
+        });
+    } catch (error) {
+        console.error('Erro ao deletar usuário:', error);
+        return res.status(500).json({
+            message: 'Erro interno ao deletar usuário',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
 app.post('/login', async (req, res) => {
     const { email, senha } = req.body;
 
@@ -108,6 +269,13 @@ app.get('/tarefas', async (req, res) => {
     const { id_projeto, status } = req.query;
 
     try {
+        // Validação do ID do projeto
+        if (id_projeto && !isValidUUID(id_projeto)) {
+            return res.status(400).json({ 
+                message: 'ID do projeto inválido' 
+            });
+        }
+
         const filtros = {};
         
         if (id_projeto) {
@@ -115,17 +283,44 @@ app.get('/tarefas', async (req, res) => {
         }
 
         if (status) {
+            // Validação do status
+            if (!Object.values(Status).includes(status)) {
+                return res.status(400).json({ 
+                    message: 'Status inválido' 
+                });
+            }
             filtros.status = status;
         }
 
         const tarefas = await prisma.tarefa.findMany({
             where: filtros,
+            include: {
+                responsavel: {
+                    select: {
+                        id_usuario: true,
+                        nome: true,
+                        email: true
+                    }
+                },
+                projeto: {
+                    select: {
+                        nome: true,
+                        descricao: true
+                    }
+                }
+            },
+            orderBy: {
+                prioridade: 'desc'
+            }
         });
 
         return res.json(tarefas);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Erro ao buscar tarefas' });
+        console.error('Erro ao buscar tarefas:', error);
+        return res.status(500).json({ 
+            message: 'Erro interno ao buscar tarefas',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 });
 

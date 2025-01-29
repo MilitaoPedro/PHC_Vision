@@ -1,0 +1,98 @@
+.backgroundContainer {
+    background-color: #7385FF;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../assets/images/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+/* Container de conteúdo com responsividade */
+.contentContainer {
+    width: 80%;
+    height: 800px;
+    max-width: 1200px;
+    margin-top: 80px;
+    padding: 24px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition-default);
+    overflow-y: scroll;
+}
+
+/* Estados de loading e erro */
+.loadingContainer,
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.errorIcon {
+    font-size: 40px;
+    color: var(--error-color);
+    animation: shake 0.8s ease-in-out;
+}
+
+.usersGrid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.pageTitle {
+    color: #f8f8f8;
+}
+
+.hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 5px solid #F8F8F8;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.userCard {
+    width: 100%;
+    background: #F8F8F8;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon {
+    padding-right: 10px;
+    color: #7385FF;
+}
+
+/* Informações de projeto */
+.projectInfo {
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    border-left: 4px solid var(--warning-color);
+}
+
+/* Botões do modal */
+.modalButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
