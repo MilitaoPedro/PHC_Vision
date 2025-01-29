@@ -16,11 +16,11 @@ Em diversas empresas, as funções são divididas entre os funcionários a parti
 
 ## Ferramentas
 
- - Node.js (v22.12.0)
+ - Node.js (v20.17.0)
  - React Framework (v19.0)
  - Express (v4.21.2)
- - Docker (v27.0)
- - FireBase (NoSQL Database)
+ - Prisma (v6.3.0)
+ - Postgres (v8.14)
 
 ## Documentação e Requisitos
 
@@ -73,42 +73,67 @@ https://nodejs.org/en/download/
       ```sh
       iwr https://get.pnpm.io/install.ps1 -useb | iex
       ```
-
-- Docker (será utilizado principalmente para banco de dados para desenvolvimento)
-
-   ```sh
-   https://www.docker.com/get-started/
-   ```
-
+      
 ## Instalação
 
-Clone o repositório
+Siga os passos abaixo para rodar o projeto localmente.
+
+### Pré-requisitos
+
+Certifique-se de ter as seguintes ferramentas instaladas na sua máquina:
+
+- **Node.js** (versão mínima recomendada: 14.x)
+- **npm** ou **yarn** como gerenciador de pacotes
+- **PostgreSQL** ou outro banco de dados compatível, se necessário
+
+### Clone o repositório
+
+1. Clone o repositório em sua máquina local usando o seguinte comando:
 
 ```sh
 git clone https://github.com/MilitaoPedro/PHC_Vision
-```
+````
 
-1. Instale as dependências
+## Front-End
 
-   ```sh
-   pnpm install
-   ```
+2. Navegue para a pasta do front-end
+   
+```sh
+cd phc_vision
+````
+3. Instale as dependências:
+   
+```sh
+npm install
+````
+4. Inicie o servidor de desenvolvimento
+   
+```sh
+npm run dev
+````
 
-2. Rode os containers (ou pare-os, se necessário):
-  
-   ```sh
-   pnpm compose:up
-   ```
+## Back-End
 
-3. Rode o script de configuração
+5. Navegue para a pasta do back-end:
+   
+```sh
+cd PHC_Vision/back-end
+````
 
-   ```sh
-   pnpm config:local
-   ```
+6. Instale as dependências:
+   
+```sh
+npm install
+````
 
-4. Rode os projetos
+7. Configure o banco de dado
+   
+```sh
+npx prisma migrate dev
+````
 
-   ```sh
-   pnpm start:dev
-   ```
----
+8. Inicie o servidor
+
+```sh
+npm start
+````
