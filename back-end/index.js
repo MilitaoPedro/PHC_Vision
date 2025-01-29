@@ -478,7 +478,7 @@ app.get('/tarefas', async (req, res) => {
 });
 
 // Atualizar tarefa
-app.put('/tarefa/:id', async (req, res) => {
+app.put('/tarefa/edit/:id', async (req, res) => {
     const { id } = req.params;
     const { titulo, descricao, prioridade, status } = req.body;
 
@@ -495,7 +495,7 @@ app.put('/tarefa/:id', async (req, res) => {
 });
 
 // Deletar tarefa
-app.delete('/tarefa/:id', async (req, res) => {
+app.delete('/tarefa/delete/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
